@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="BruttoNettoRechner.View.AbrechnungView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BruttoNettoRechner.View"
+             xmlns:vm="clr-namespace:BruttoNettoRechner.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" >
+
+    <UserControl.DataContext>
+        <vm:AbrechnungViewModel/>
+
+    </UserControl.DataContext>
+
+    <Grid x:Name="taxgrid" Background="LightBlue" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- ************************ Kopfzeile   ************************ -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2"
+                    Height="25" Margin="5 5 5 5" >
+            <Label Content="Name:" Margin="10 0 2 0"/>
+            <TextBox x:Name="Alias" Text="{Binding Name}" Width="150" VerticalContentAlignment="Center" 
+                     BorderThickness="2" Cursor="Pen"  GotFocus="Alias_GotFocus"/>
+            <Label Content="Str.-Klasse:" Margin="10 0 2 0"/>
+            <ComboBox x:Name="StrKl" ItemsSource="{Binding StrKlassen}" VerticalContentAlignment="Center"
+                       SelectedItem="{Binding SelectedSteuerklasse}" IsEditable="False" 
+                      IsReadOnly="True" SelectedIndex="0" />
+
+
+            <Label Content="KiSt.:" Margin="10 0 2 0"/>
+            <ComboBox x:Name="KiStr" ItemsSource="{Binding KiSteuer}" VerticalContentAlignment="Center" Width="70"
+                      SelectedItem="{Binding SelectedKiSteuer}" IsEditable="False"
+                      IsReadOnly="True" SelectedIndex="0"/>
+            
+            <Label Content="Kinder:" Margin="10 0 2 0"/>
+            <ComboBox x:Name="KinderFB" ItemsSource="{Binding KinderFB}" VerticalContentAlignment="Center" Width="50"
+                      SelectedItem="{Binding SelectedKiFB}" IsEditable="False"
+                      IsReadOnly="True" SelectedIndex="0"/>
+           
+            <Label Content="Krankenkasse:" Margin="10 0 2 0"/>
+            <ComboBox x:Name="KrankenK" ItemsSource="{Binding KrankenKassen}" VerticalContentAlignment="Center" Width="120"
+                      SelectedItem="{Binding SelectedKrankenkasse}" IsEditable="False"
+                      IsReadOnly="True" SelectedIndex="0"/>
+           
+        </StackPanel>
+        <GridSplitter Grid.Row="0" Grid.ColumnSpan="2" Focusable="False" HorizontalAlignment="Stretch" Height="2" VerticalAlignment="Bottom"/>
+        <!-- ************************ Mittelzeile Brutto - Netto / AG  ************************ -->
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="5 10 5 10">
+                <Label Content="Arbeitnehmerabrechnung monatlich bei Sozialversicherungspflicht" Margin="10 2 2 10"/>
+
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0" >
+                <Label Content="Brutto-Gehalt:" Width="160" Foreground="White"/>
+                <TextBox x:Name="Brutto"  Margin="2 2 2 2" Width="150" Height="25" BorderThickness="2" Cursor="Pen"
+                             Text="{Binding BruttoGehalt, StringFormat={}{0:N2}, ConverterCulture=de-DE, UpdateSourceTrigger=PropertyChanged}"  HorizontalContentAlignment="Right"
+                             VerticalContentAlignment="Center" PreviewMouseLeftButtonUp="Brutto_PreviewMouseLeftButtonUp"
+                             IsReadOnly="{Binding BlockEingabe}" GotKeyboardFocus="Brutto_GotFocus"
+                              />
+
+                <Label Content="€ monatlich" Foreground="White" Margin="2 0 0 0"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                    <Label Content="- Lohnsteuer:" Width="160" Foreground="White"/>
+                    <TextBox x:Name="LStAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding Steuerabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Soli-Zuschlag:" Width="160" Foreground="White"/>
+                <TextBox x:Name="SoliAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding Soli}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                 </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Kirchensteuer:" Width="160" Foreground="White"/>
+                <TextBox x:Name="KiStAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding KiStrabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Rentenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="RVAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding ANRentenabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Arbeitslosenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="AVAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding ANArbeitslosenabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Krankenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="KVAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding ANKrankenkassenabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="- Pflegeversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="PVAbzug" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding ANPflegekassenabzug}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="= Netto-Gehalt:" Width="160" Foreground="White"/>
+                <TextBox x:Name="NettoGehalt" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding NettoGehalt}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+
+        </StackPanel>
+        <GridSplitter Grid.Column="0" Grid.Row="1" Focusable="False" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="2"/>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="5 10 5 10">
+            <Label Content="Arbeitgeberbelastung" Margin="10 2 2 10"/>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0" >
+                <Label Content="Brutto-Gehalt:" Width="160" Foreground="White"/>
+                <TextBox x:Name="BruttoAG"  Margin="2 2 2 2" Width="150" Height="25" 
+                             Text="{Binding BruttoGehalt, StringFormat={}{0:N2}, ConverterCulture=de-DE}"  HorizontalContentAlignment="Right"
+                             VerticalContentAlignment="Center" Focusable="False" Cursor="No" IsReadOnly="True"/>
+                <Label Content="€ monatlich" Foreground="White" Margin="2 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ Rentenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="RVAbzugAG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding AGRentenBeitrag}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ Arbeitslosenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="AVAbzugAG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding AGArbeitslosenBeitrag}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ Krankenversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="KVAbzugAG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding AGKrankenkassenBeitrag}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ Pflegeversicherung:" Width="160" Foreground="White"/>
+                <TextBox x:Name="PVAbzugAG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding AGPflegekassenBeitrag}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ U1 (Lohnfortzahlung):" Width="160" Foreground="White"/>
+                <TextBox x:Name="U1AG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding U1}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ U2 (Mutterschaft):" Width="160" Foreground="White"/>
+                <TextBox x:Name="U2AG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding U2}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="+ U3 (Insolvenz):" Width="160" Foreground="White"/>
+                <TextBox x:Name="U3AG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding U3}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                <Label Content="= Lohnkosten:" Width="160" Foreground="White"/>
+                <TextBox x:Name="LohnKAG" Margin="2 2 2 2" Width="150" Height="25" Cursor="No"
+                           Text="{Binding Lohnkosten}" IsReadOnly="True" Focusable="False"
+                           HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+
+        </StackPanel>
+        
+            <GridSplitter Grid.Row="2" Grid.ColumnSpan="2" Focusable="False" HorizontalAlignment="Stretch" Height="2" VerticalAlignment="Top"/>
+        <!-- ************************ Commandzeile / Buttons   ************************ -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2">
+            <Label Content="Status:" VerticalContentAlignment="Center" Foreground="White" Margin="15 7 2 10"/>
+            <Label x:Name="Satuscheck" Content="{Binding Statuscheck}" VerticalContentAlignment="Center" Foreground="White" Margin="5 7 2 10"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2">
+            
+            <Button Content="Speichern XML" Command="{Binding SpeichernXMLButton}" Width="150" Height="24" Margin="2 2 5 2"/>
+            <Button x:Name="BerechnenButton" Content="Berechnen" Command="{Binding BerechnenButton}" Focusable="True"
+                    Width="150" Height="24" Margin="2 2 10 2" VerticalAlignment="Center"   />
+        </StackPanel>
+        
+
+    </Grid>
+</UserControl>
