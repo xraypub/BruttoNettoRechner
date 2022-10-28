@@ -8,4 +8,6 @@ Die Berechnung des Nettolohns erfolgt nur für "normal" gesetzlich pflichtversic
 
 Bei der Ermittlung der sozialen Lohnnebenkosten (Arbeitgeberbelastung) wurde U1 als gegeben unterstellt und kann nicht abgewählt werden. Der U1-Satz entspricht dem Standard-Satz der jeweiligen Krankenkasse und kann nicht geändert werden.
 
-Es findet keine umfangreiche Daten-Eingabe Validierung statt, ebenso fehlt eine ausreichende Exceptionbehandlung!
+Die berechneten Werte können als XML-Datei exportiert werden.
+
+**Es findet keine umfangreiche Daten-Eingabe Validierung statt, ebenso fehlt eine ausreichende Exceptionbehandlung!**
