@@ -1,4 +1,4 @@
-# BruttoNettoRechner
+# BruttoNettoRechner mit Arbeitgeber-Lohnkosten-Berechnung
 
 Brutto-Netto-Rechner ist ein 'Play-Around', um C# WPF/MVVM Funktionalitäten zu testen und die Ermittlung des Nettolohns nach deutschem Steuerrecht in Anlehnung an die Programmablaufpläne des BMF (Bundesministerium für Finanzen) sowie der Arbeitgeber-Lohnkosten durchzuführen.
 
