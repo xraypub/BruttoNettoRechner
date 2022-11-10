@@ -1,6 +1,6 @@
 # BruttoNettoRechner mit Arbeitgeber-Lohnkosten
 
-Brutto-Netto-Rechner ist ein 'Play-Around', um C# WPF/MVVM Funktionalitäten zu testen und die Ermittlung des Nettolohns nach deutschem Steuerrecht in Anlehnung an die Programmablaufpläne des BMF (Bundesministerium für Finanzen) sowie der Arbeitgeber-Lohnkosten durchzuführen.
+Brutto-Netto-Rechner ist ein 'try-out', um C# WPF/MVVM Funktionalitäten zu testen und die Ermittlung des Nettolohns nach deutschem Steuerrecht in Anlehnung an die Programmablaufpläne des BMF (Bundesministerium für Finanzen) sowie der Arbeitgeber-Lohnkosten durchzuführen.
 
 Die Anwendung ist stark vereinfacht und allenfalls eine Basis zur Weiterentwicklung. Es wird nur Lohsteuerklasse 1 richtig berechnet jedoch nicht gemäß Prüftabellen vollständig validiert.
 
